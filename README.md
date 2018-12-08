@@ -12,7 +12,7 @@ import numpy as np
 ```
 
 ## Loading and processing data
-```
+```Python
 Jan_2013 = '...../Jan2013.gpkg' #data from Jan 2013
 data_2013 = gpd.read_file(Jan_2013)
 ```
