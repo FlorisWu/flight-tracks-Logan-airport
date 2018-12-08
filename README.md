@@ -6,7 +6,7 @@ In the summer of 2018, as part of [#ARforChange](http://www.storybench.org/arfor
 Data are from [Kent Johnson](http://kentsj.com/BWFS/Logan_33L_Flight_Tracks_2013_vs_2015.html), a member of [Boston West Fair Skies](https://www.bostonwestfairskies.org/news.html), an advocacy group aiming to address this issue.
 
 ## Loading packages
-```
+```Python
 import geopandas as gpd
 import numpy as np
 ```
@@ -18,7 +18,7 @@ data_2013 = gpd.read_file(Jan_2013)
 ```
 
 ## Creating heatmaps
-```
+```Python
 # I created two heatmaps of airplane counts and heights. The first one shows the mean heights of flights over a 100x100 grid over parts Boston area near Logan Airport, while the second one shows the number of counts of flights in each 100x100 cell.
 Lon = np.arange(-71.33, -70.7, 0.0063) #this divides the longitude range we want into 100 equal intervals; we do this because we want to take mean values of heights in those 100x100 small cells in the 100x100 grid to plot the heatmap
 Lat = np.arange(42.1, 42.6, 0.005) #this divides the latitude range we want into 100 equal intervals
