@@ -117,23 +117,15 @@ for a in range (0,250000):
         high[a] = Mean2015[a]
         
 j = {'x': low, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
-#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
-#and adjusted the lat and lon values accordingly
 df = pd.DataFrame(data=j)
 
 k = {'y': low_med, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
-#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
-#and adjusted the lat and lon values accordingly
 dg = pd.DataFrame(data=k)
 
 l = {'z': high_med, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
-#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
-#and adjusted the lat and lon values accordingly
 dh = pd.DataFrame(data=l)
 
 m = {'n': high, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
-#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
-#and adjusted the lat and lon values accordingly
 di = pd.DataFrame(data=m)
 
 locations_low = df[['latitude', 'longitude']]
