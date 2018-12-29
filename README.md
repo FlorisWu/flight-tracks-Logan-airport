@@ -48,7 +48,7 @@ for a in range(0,24500): #there are 24500 data points
                         break
 ```
 
-Here, we are creating arrays of 0s that are 500 wide and 500 tall. Then we store the mean values of heights and counts in those arrays.
+Here, we are creating arrays of 0s that are 500 wide and 500 tall. Then we store the mean values of heights for each small cell and counts in those arrays.
 ```python
 Mean = np.zeros((500,500))
 Counts = np.zeros((500,500))
@@ -84,15 +84,13 @@ Mean2015.resize((250000,))
 
 Plotting heatmap for airplane counts
 ```python
-k = {'g': Counts2015, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
-#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
-#and adjusted the lat and lon values accordingly
+k = {'Counts': Counts2015, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)}
 df = pd.DataFrame(data=k)
 ```
 
 ```python
 locations = df[['latitude', 'longitude']]
-weights = df['g']
+weights = df['Counts']
 fig = gmaps.figure()
 heatmap_layer = gmaps.heatmap_layer(locations, weights=weights)
 fig.add_layer(gmaps.heatmap_layer(locations, weights=weights))
@@ -101,3 +99,94 @@ fig
 
 <img src="https://github.com/FlorisWu/flight-tracks-logan-airport/blob/master/Counts.png?raw=true" width="900"/>
 
+To plot the heatmap for heights, I divided the values of heights into four groups.
+```python
+low = np.zeros(250000)
+low_med = np.zeros(250000)
+high_med = np.zeros(250000)
+high = np.zeros(250000)
+
+for a in range (0,250000):
+    if 0 < Mean2015[a] < 1000:
+        low[a] = Mean2015[a]
+    elif 1000 <= Mean2015[a] < 2000:
+        low_med[a] = Mean2015[a]
+    elif 2000 <= Mean2015[a] < 3000:
+        high_med[a] = Mean2015[a]
+    elif 3000 <= Mean2015[a] < 32500:
+        high[a] = Mean2015[a]
+        
+j = {'x': low, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
+#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
+#and adjusted the lat and lon values accordingly
+df = pd.DataFrame(data=j)
+
+k = {'y': low_med, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
+#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
+#and adjusted the lat and lon values accordingly
+dg = pd.DataFrame(data=k)
+
+l = {'z': high_med, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
+#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
+#and adjusted the lat and lon values accordingly
+dh = pd.DataFrame(data=l)
+
+m = {'n': high, 'latitude': latitude_values, 'longitude': np.concatenate(longitude_values)} 
+#pandas dataframe can't take 2d matrices. thats why we made the mean matrix into 1d, 
+#and adjusted the lat and lon values accordingly
+di = pd.DataFrame(data=m)
+
+locations_low = df[['latitude', 'longitude']]
+weights_low = df['x']
+fig = gmaps.figure()
+heatmap_layer_low = gmaps.heatmap_layer(locations_low, weights_low)
+heatmap_layer_low.gradient = [
+    (200, 200, 200, 0),
+    #(200, 200, 200, 0),
+    (255, 0, 0, 1) #color red
+]
+
+
+locations_low_med = dg[['latitude', 'longitude']]
+weights_low_med = dg['y']
+fig = gmaps.figure()
+heatmap_layer_low_med = gmaps.heatmap_layer(locations_low_med, weights_low_med)
+heatmap_layer_low_med.gradient = [
+    (200, 200, 200, 0),
+    #(200, 200, 200, 0), 
+    (255, 160, 122, 1) #color orange
+]
+
+
+locations_high_med = dh[['latitude', 'longitude']]
+weights_high_med = dh['z']
+fig = gmaps.figure()
+heatmap_layer_high_med = gmaps.heatmap_layer(locations_high_med, weights_high_med)
+fig.add_layer(heatmap_layer_high_med)
+heatmap_layer_high_med.gradient = [
+    (200, 200, 200, 0),
+    #(200, 200, 200, 0),
+    (255, 255, 0, 1) #color yellow
+]
+
+
+locations_high = di[['latitude', 'longitude']]
+weights_high = di['n']
+fig = gmaps.figure()
+heatmap_layer_high = gmaps.heatmap_layer(locations_high, weights_high)
+heatmap_layer_high.gradient = [
+    (200, 200, 200, 0),
+    #(200, 200, 200, 0), 
+    (0, 255, 127, 1) #color green
+]
+
+fig.add_layer(heatmap_layer_high)
+fig.add_layer(heatmap_layer_high_med)
+fig.add_layer(heatmap_layer_low_med)
+fig.add_layer(heatmap_layer_low)
+
+
+fig
+```
+
+<img src="https://github.com/FlorisWu/flight-tracks-logan-airport/blob/master/Heights.png?raw=true" width="900"/>
