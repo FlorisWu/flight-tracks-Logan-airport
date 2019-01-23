@@ -76,9 +76,9 @@ Pandas dataframe can't take two-dimensional arrays per column. So we need to put
 ```python
 longitude_values = [Lon,]*500
 latitude_values = np.repeat(Lat,500)
-Counts2015=np.array(Counts2015)
+Counts2015=np.array(Counts)
 Counts2015.resize((250000,))
-Mean2015=np.array(Mean2015)
+Mean2015=np.array(Mean)
 Mean2015.resize((250000,))
 ```
 
