@@ -29,9 +29,9 @@ Here, I am creating an empty list to store heights.
 ```python
 Heights = []
 
-for i in range(100):
+for i in range(500):
     column=[]
-    for j in range(100):
+    for j in range(500):
         column.append([])
     Heights.append(column)
 ```
